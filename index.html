@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Memory Lane - Digital Yearbook</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      scroll-behavior: smooth;
+    }
+
+    .gradient-bg {
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .kelas-link {
+  background-color: #ffffff; /* Warna default */
+  color: rgb(0, 0, 0);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  border: none; /* Menghilangkan border default pada button */
+  cursor: pointer; /* Mengubah cursor menjadi pointer */
+  margin: 0 5px; /* Sedikit margin antar tombol */
+}
+
+/* Warna saat aktif */
+.kelas-link.active {
+  background-color: #4f46e5; /* Warna lebih gelap untuk item aktif */
+  color: rgb(255, 255, 255);
+}
+
+/* Hover effect */
+.kelas-link:not(.active):hover {
+  background-color: #e5e7eb; /* Warna hover */
+}
+
+/* Warna saat aktif */
+.kelas-link.active {
+  background-color: #4f46e5; /* Warna lebih gelap untuk item aktif */
+  color: rgb(255, 255, 255);
+}
+
+  </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+      <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+          <div class="flex items-center space-x-2">
+              <i class="fas fa-camera-retro text-2xl"></i>
+              <span class="text-xl font-bold">Memory Lane</span>
+          </div>
+          <div class="hidden md:flex space-x-6">
+             <a href="#" class="hover:text-blue-200 transition">home</a>
+              <a href="#gallery" class="hover:text-blue-200 transition">Gallery</a>
+              <a href="#profiles" class="hover:text-blue-200 transition">Profiles</a>
+              <a href="#About" class="hover:text-blue-200 transition">About</a>
+              
+          </div>
+          <div class="flex items-center space-x-4">
+
+              <button class="md:hidden" id="mobile-menu-button">
+                  <i class="fas fa-bars text-xl"></i>
+              </button>
+          </div>
+      </div>
+      
+      <!-- Mobile menu -->
+      <div class="md:hidden hidden bg-blue-700 px-4 py-2" id="mobile-menu">
+        <a href="#gallery" class="block py-2 hover:bg-blue-600 px-2 rounded"></a>
+          <a href="#gallery" class="block py-2 hover:bg-blue-600 px-2 rounded">Gallery</a>
+          <a href="#profiles" class="block py-2 hover:bg-blue-600 px-2 rounded">Profiles</a>
+          <a href="#About" class="block py-2 hover:bg-blue-600 px-2 rounded">About</a>
+      </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="gradient-bg text-white py-20">
+      <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+              <h1 class="text-4xl md:text-5xl font-bold mb-4">Class of 2025 Yearbook</h1>
+              <p class="text-xl mb-6">Relive the memories, celebrate the journey, and cherish the moments that made us who we are.</p>
+              <div class="flex flex-wrap gap-3 mb-8">
+                  <div class="bg-white bg-opacity-20 px-4 py-2 rounded-full">#Graduation2025</div>
+                  <div class="bg-white bg-opacity-20 px-4 py-2 rounded-full">#OnceAStudentAlwaysAStudent</div>
+                  <div class="bg-white bg-opacity-20 px-4 py-2 rounded-full">#MemoriesForLife</div>
+              </div>
+              <div class="bg-white bg-opacity-20 p-4 rounded-lg mb-6">
+                  <h3 class="font-bold mb-2">Countdown to Graduation</h3>
+                  <div class="flex space-x-4" id="countdown">
+                      <div class="text-center">
+                          <div class="text-3xl font-bold" id="days">00</div>
+                          <div class="text-sm">Hari</div>
+                      </div>
+                      <div class="text-center">
+                          <div class="text-3xl font-bold" id="hours">00</div>
+                          <div class="text-sm">Jam</div>
+                      </div>
+                      <div class="text-center">
+                          <div class="text-3xl font-bold" id="minutes">00</div>
+                          <div class="text-sm">Menit</div>
+                      </div>
+                      <div class="text-center">
+                          <div class="text-3xl font-bold" id="seconds">00</div>
+                          <div class="text-sm">Detik</div>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+          <div class="md:w-1/2 flex justify-center fade-in">
+              <div class="relative w-64 h-64 md:w-80 md:h-80 bg-white bg-opacity-20 rounded-2xl overflow-hidden shadow-2xl floating">
+                  <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Graduation" class="w-full h-full object-cover">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                  <div class="absolute bottom-0 left-0 p-4 text-white">
+                      <h3 class="font-bold text-xl">Senior Class Photo</h3>
+                      <p>May 2023</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-12">Kenangan</h2>
+          
+          <!-- Filter tabs -->
+          <div class="flex flex-wrap justify-center gap-2 mb-8">
+            <button class="kelas-link active" data-filter="all">All</button>
+            <button class="kelas-link" data-filter="class">Class</button>
+            <button class="kelas-link" data-filter="events">Events</button>
+            <button class="kelas-link" data-filter="sports">Sports</button>          </div>
+          
+          <!-- Photo grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              <!-- Photo 1 -->
+              <div class="photo-card rounded-xl overflow-hidden shadow-lg relative group" data-category="class">
+                  <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                       alt="Classroom" class="w-full h-64 object-cover">
+                  <div class="photo-overlay absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <h3 class="text-white font-bold text-lg">First Day of School</h3>
+                      <p class="text-gray-300 text-sm"></p>
+                      <div class="flex justify-between items-center mt-2">
+                          <div class="flex space-x-2">
+                              <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">#Class12A</span>
+                              <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">#FirstDay</span>
+                          </div>
+                          <div class="flex items-center space-x-2 text-white">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              <!-- Photo 2 -->
+              <div class="photo-card rounded-xl overflow-hidden shadow-lg relative group" data-category="events">
+                  <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Concert" class="w-full h-64 object-cover">
+                  <div class="photo-overlay absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <h3 class="text-white font-bold text-lg">Annual Talent Show</h3>
+                      <p class="text-gray-300 text-sm"></p>
+                      <div class="flex justify-between items-center mt-2">
+                          <div class="flex space-x-2">
+                              <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">#TalentShow</span>
+                              <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">#Music</span>
+                          </div>
+                          <div class="flex items-center space-x-2 text-white">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              <!-- Photo 3 -->
+              <div class="photo-card rounded-xl overflow-hidden shadow-lg relative group" data-category="sports">
+                  <img src="https://images.unsplash.com/photo-1541534741688-6078c6efb9a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Basketball" class="w-full h-64 object-cover">
+                  <div class="photo-overlay absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <h3 class="text-white font-bold text-lg">Championship Game</h3>
+                      <p class="text-gray-300 text-sm"></p>
+                      <div class="flex justify-between items-center mt-2">
+                          <div class="flex space-x-2">
+                              <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">#Basketball</span>
+                              <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">#Champions</span>
+                          </div>
+                          <div class="flex items-center space-x-2 text-white">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              <!-- Photo 4 -->
+              <div class="photo-card rounded-xl overflow-hidden shadow-lg relative group" data-category="trips">
+                  <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Field Trip" class="w-full h-64 object-cover">
+                  <div class="photo-overlay absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <h3 class="text-white font-bold text-lg">Science Museum Trip</h3>
+                      <p class="text-gray-300 text-sm"></p>
+                      <div class="flex justify-between items-center mt-2">
+                          <div class="flex space-x-2">
+                              <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">#FieldTrip</span>
+                              <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">#Science</span>
+                          </div>
+                          <div class="flex items-center space-x-2 text-white">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              <!-- Photo 5 -->
+              <div class="photo-card rounded-xl overflow-hidden shadow-lg relative group" data-category="class">
+                  <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" 
+                       alt="Graduation" class="w-full h-64 object-cover">
+                  <div class="photo-overlay absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <h3 class="text-white font-bold text-lg">Final Exams</h3>
+                      <p class="text-gray-300 text-sm"></p>
+                      <div class="flex justify-between items-center mt-2">
+                          <div class="flex space-x-2">
+                              <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">#Exams</span>
+                              <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">#Study</span>
+                          </div>
+                          <div class="flex items-center space-x-2 text-white">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              <!-- Photo 6 -->
+              <div class="photo-card rounded-xl overflow-hidden shadow-lg relative group" data-category="events">
+                  <img src="https://images.unsplash.com/photo-1496337588274-53eeaeb40bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Prom" class="w-full h-64 object-cover">
+                  <div class="photo-overlay absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <h3 class="text-white font-bold text-lg">Senior Prom Night</h3>
+                      <p class="text-gray-300 text-sm"></p>
+                      <div class="flex justify-between items-center mt-2">
+                          <div class="flex space-x-2">
+                              <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">#Prom</span>
+                              <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">#Dance</span>
+                          </div>
+                          <div class="flex items-center space-x-2 text-white">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              <!-- Photo 7 -->
+              <div class="photo-card rounded-xl overflow-hidden shadow-lg relative group" data-category="sports">
+                  <img src="https://images.unsplash.com/photo-1547347298-4074fc3086f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Soccer" class="w-full h-64 object-cover">
+                  <div class="photo-overlay absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <h3 class="text-white font-bold text-lg">Soccer Tournament</h3>
+                      <p class="text-gray-300 text-sm"></p>
+                      <div class="flex justify-between items-center mt-2">
+                          <div class="flex space-x-2">
+                              <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">#Soccer</span>
+                              <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">#Tournament</span>
+                          </div>
+                          <div class="flex items-center space-x-2 text-white">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              <!-- Photo 8 -->
+              <div class="photo-card rounded-xl overflow-hidden shadow-lg relative group" data-category="trips">
+                  <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Graduation Trip" class="w-full h-64 object-cover">
+                  <div class="photo-overlay absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <h3 class="text-white font-bold text-lg">Senior Trip</h3>
+                      <p class="text-gray-300 text-sm"></p>
+                      <div class="flex justify-between items-center mt-2">
+                          <div class="flex space-x-2">
+                              <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">#SeniorTrip</span>
+                              <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">#Beach</span>
+                          </div>
+                          <div class="flex items-center space-x-2 text-white">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="text-center mt-10">
+
+          </div>
+      </div>
+  </section>
+
+
+
+    <!-- Welcome Messages Section -->
+    <section id="messages" class="py-20 px-4 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Special Messages</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Heartfelt farewell messages from our school leaders and teachers</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Principal's Message -->
+                <div class="memory-card bg-white rounded-xl overflow-hidden shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="photo-frame w-20 h-20 rounded-full overflow-hidden bg-gray-200">
+                            <img src="https://randomuser.me/api/portraits/women/60.jpg" alt="Principal" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-bold text-lg">Dr. Sarah Johnson</h3>
+                            <p class="text-indigo-600 text-sm">Principal</p>
+                        </div>
+                    </div>
+                    <div class="text-gray-700 mb-6">
+                        <p>To our graduating class of 2024, you have made us proud. These halls will echo with your laughter and achievements for years to come. As you move forward, remember that learning never stops...</p>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <button class="like-button flex items-center space-x-1 text-gray-500">
+                            <i class="far fa-heart text-xl"></i>
+                            <span>24</span>
+                        </button>
+                        <button class="text-indigo-600 font-medium hover:text-indigo-800 transition">Read more</button>
+                    </div>
+                </div>
+                
+                <!-- Student Council Message -->
+                <div class="memory-card bg-white rounded-xl overflow-hidden shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="photo-frame w-20 h-20 rounded-full overflow-hidden bg-gray-200">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student Council" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-bold text-lg">Michael Chen</h3>
+                            <p class="text-indigo-600 text-sm">Student Council President</p>
+                        </div>
+                    </div>
+                    <div class="text-gray-700 mb-6">
+                        <p>It's been an honor representing our class. From first-day jitters to final exams, we've grown together. Remember the friendships, the challenges overcome, and the memories we've created...</p>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <button class="like-button flex items-center space-x-1 text-gray-500">
+                            <i class="far fa-heart text-xl"></i>
+                            <span>42</span>
+                        </button>
+                        <button class="text-indigo-600 font-medium hover:text-indigo-800 transition">Read more</button>
+                    </div>
+                </div>
+                
+                <!-- Teacher Representative Message -->
+                <div class="memory-card bg-white rounded-xl overflow-hidden shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="photo-frame w-20 h-20 rounded-full overflow-hidden bg-gray-200">
+                            <img src="https://randomuser.me/api/portraits/men/25.jpg" alt="Teacher" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-bold text-lg">Mr. David Wilson</h3>
+                            <p class="text-indigo-600 text-sm">Teacher Representative</p>
+                        </div>
+                    </div>
+                    <div class="text-gray-700 mb-6">
+                        <p>Teaching this graduating class has been one of the most rewarding experiences of my career. Your curiosity, creativity and resilience has inspired me every day. As you step into the world...</p>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <button class="like-button flex items-center space-x-1 text-gray-500">
+                            <i class="far fa-heart text-xl"></i>
+                            <span>38</span>
+                        </button>
+                        <button class="text-indigo-600 font-medium hover:text-indigo-800 transition">Read more</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#messages" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold transition">View All Messages</a>
+            </div>
+        </div>
+    </section>
+
+    
+
+
+
+<!-- Profiles Section -->
+<section id="Profile"></section>
+<section id="profiles" class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12">Profil Kelas</h2>
+
+    <section id="kelas-categories" class="text-center mt-12">
+        <h2 class="text-2xl font-bold mb-6"></h2>
+        <div class="flex flex-wrap justify-center gap-4">
+<div class="flex gap-2 mb-4">
+  <button onclick="loadClass('9A')" class="kelas-link active">9A</button>
+  <button onclick="loadClass('9B')" class="kelas-link">9B</button>
+  <button onclick="loadClass('9C')" class="kelas-link">9C</button>
+  <button onclick="loadClass('9D')" class="kelas-link">9D</button>
+</div>          <div class="container mx-auto px-4">
+        </div>
+      </section>
+
+    <!-- Detail Profile -->
+    <div id="profile-detail" class="bg-white rounded-xl shadow-md overflow-hidden mb-12">
+      <div class="md:flex">
+        <div class="md:w-1/3 bg-gray-100 p-6 flex flex-col items-center justify-center">
+          <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Student" class="w-32 h-32 rounded-full object-cover mb-4 border-4 border-white shadow">
+          <h3 class="text-xl font-bold">Jessica Williams</h3>
+          <p class="text-blue-600">Wali kelas</p>
+        </div>
+        <div class="md:w-2/3 p-6">
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <p class="text-sm text-gray-500">Tahun lulus</p>
+              <p class="font-medium">2023</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Kampung halaman</p>
+              <p class="font-medium">Springfield</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Ulang tahun</p>
+              <p class="font-medium">May 15, 2005</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500"></p>
+              <p class="font-medium"></p>
+            </div>
+
+          </div>
+          <div>
+            <h4 class="font-bold mb-2">Memori Favorit</h4>
+            <p class="text-gray-600 italic">"Organizing the senior prom and seeing everyone have an amazing time after all our hard work. The look on people's faces when they entered the decorated gym made all the stress worth it!"</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thumbnails -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      <a href="#Profile" onclick="showProfile('david')" class="group">
+        <div class="bg-white p-4 rounded-lg shadow-sm text-center group-hover:shadow-md transition">
+          <img src="https://randomuser.me/api/portraits/men/1.jpg" class="w-16 h-16 rounded-full object-cover mx-auto mb-2 group-hover:ring-2 group-hover:ring-blue-500 transition">
+          <h4 class="font-medium text-sm">David Kim</h4>
+          <p class="text-xs text-gray-500">Ketua Kelas</p>
+        </div>
+      </a>
+      <a href="#Profile" onclick="showProfile('jessica')" class="group">
+        <div class="bg-white p-4 rounded-lg shadow-sm text-center group-hover:shadow-md transition">
+          <img src="https://randomuser.me/api/portraits/women/43.jpg" class="w-16 h-16 rounded-full object-cover mx-auto mb-2 group-hover:ring-2 group-hover:ring-blue-500 transition">
+          <h4 class="font-medium text-sm">Jessica Williams</h4>
+          <p class="text-xs text-gray-500">Wakil Ketua Kelas</p>
+        </div>
+      </a>
+      <!-- Tambahkan thumbnail lainnya jika diinginkan -->
+    </div>
+  </div>
+</section>
+
+<!-- Script -->
+<script>
+  const profiles = {
+    jessica: {
+      nama: "Jessica Williams",
+      jabatan: "Wakil Ketua Kelas",
+      tahun_lulus: "2023",
+      Kampung: "Springfield",
+      ulang_tahun: "May 15, 2005",
+      memory: "test 1999",
+      photo: "https://randomuser.me/api/portraits/women/43.jpg"
+    },
+    david: {
+      nama: "David Kim",
+      jabatan: "Ketua Kelas",
+      tahun_lulus: "2023",
+      Kampung: "Seattle",
+      ulang_tahun: "Jan 12, 2005",
+      memory: "test 1945.",
+      photo: "https://randomuser.me/api/portraits/men/1.jpg"
+    }
+  };
+
+  function showProfile(id) {
+    const p = profiles[id];
+    if (!p) return;
+    document.getElementById("profile-detail").innerHTML = `
+      <div class="md:flex">
+        <div class="md:w-1/3 bg-gray-100 p-6 flex flex-col items-center justify-center">
+          <img src="${p.photo}" alt="Student" class="w-32 h-32 rounded-full object-cover mb-4 border-4 border-white shadow">
+          <h3 class="text-xl font-bold">${p.nama}</h3>
+          <p class="text-blue-600">${p.jabatan}</p>
+        </div>
+        <div class="md:w-2/3 p-6">
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <p class="text-sm text-gray-500">tahun lulus</p>
+              <p class="font-medium">${p.tahun_lulus}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">desa</p>
+              <p class="font-medium">${p.Kampung}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">tanggal lahir</p>
+              <p class="font-medium">${p.ulang_tahun}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">citc-cita</p>
+              <p class="font-medium">${p.cita}</p>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-bold mb-2">Favorite Memory</h4>
+            <p class="text-gray-600 italic">"${p.memory}"</p>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+</script>
+
+</body>
+</html>
+
+
+    <!-- Map Section -->
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-12">Sekolah kami</h2>
+          
+          <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+              <div class="md:flex">
+                  <div class="md:w-1/2 p-8">
+                      <h3 class="text-xl font-bold mb-4">Sekolah Menengah Pertama</h3>
+                      <p class="text-gray-600 mb-6"></p>
+                      
+                      <div class="space-y-4">
+                          <div class="flex items-start">
+                              <div class="bg-blue-100 p-2 rounded-full mr-4">
+                                  <i class="fas fa-graduation-cap text-blue-600"></i>
+                              </div>
+                              <div>
+                                  <h4 class="font-bold">Didirikan</h4>
+                                  <p class="text-gray-600">2005-07-10</p>
+                              </div>
+                          </div>
+                          <div class="flex items-start">
+                              <div class="bg-purple-100 p-2 rounded-full mr-4">
+                                  <i class="fas fa-users text-purple-600"></i>
+                              </div>
+                              <div>
+                                  <h4 class="font-bold">Angkatan 2025                                  </h4>
+                                  <p class="text-gray-600">127 Siswa</p>
+                              </div>
+                          </div>
+                          <div class="flex items-start">
+                              <div class="bg-green-100 p-2 rounded-full mr-4">
+                                  <i class="fas fa-motto text-green-600"></i>
+                              </div>
+                              <div>
+                                  <h4 class="font-bold">Motto</h4>
+                                  <p class="text-gray-600">"Islam Terpadu"</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="md:w-1/2 bg-gray-200">
+                      <!-- Map placeholder - in a real app you'd use Google Maps or similar -->
+                      <iframe src=""></iframe>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+
+    <!-- Media Section -->
+    <section id="media" class="py-20 px-4 bg-gradient-to-br from-indigo-600 to-purple-600 text-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Music & Memories</h2>
+                <p class="max-w-2xl mx-auto opacity-90">Relive the best moments through videos and our school playlist</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Video Player -->
+                <div class="bg-black bg-opacity-20 rounded-xl p-6 backdrop-blur-sm">
+                    <h3 class="text-xl font-bold mb-6">Memory Videos</h3>
+                    <div class="photo-frame aspect-video bg-gray-800 rounded-lg overflow-hidden relative">
+                        <img src="https://source.unsplash.com/random/800x450/?school,graduation" alt="Video thumbnail" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                            <button class="w-16 h-16 bg-white bg-opacity-80 rounded-full flex items-center justify-center hover:bg-opacity-100 transition">
+                                <i class="fas fa-play text-indigo-600 text-2xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h4 class="font-medium">Graduation Ceremony 2024</h4>
+                        <p class="text-sm opacity-80">The full ceremony recording</p>
+                    </div>
+                    
+                    <div class="mt-6 grid grid-cols-2 gap-4">
+                        <div class="relative">
+                            <img src="https://source.unsplash.com/random/400x225/?school,performance" alt="Video thumbnail" class="w-full h-24 object-cover rounded-lg">
+                            <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 flex items-center justify-center transition">
+                                <button class="w-10 h-10 bg-white bg-opacity-80 rounded-full flex items-center justify-center hover:bg-opacity-100 transition opacity-0 hover:opacity-100">
+                                    <i class="fas fa-play text-indigo-600 text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <img src="https://source.unsplash.com/random/400x225/?sports,team" alt="Video thumbnail" class="w-full h-24 object-cover rounded-lg">
+                            <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 flex items-center justify-center transition">
+                                <button class="w-10 h-10 bg-white bg-opacity-80 rounded-full flex items-center justify-center hover:bg-opacity-100 transition opacity-0 hover:opacity-100">
+                                    <i class="fas fa-play text-indigo-600 text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Playlist -->
+                <div class="bg-black bg-opacity-20 rounded-xl p-6 backdrop-blur-sm">
+                    <h3 class="text-xl font-bold mb-6">Class of 2024 Playlist</h3>
+                    <div class="space-y-4">
+                        <!-- Song 1 -->
+                        <div class="flex items-center p-3 bg-white bg-opacity-10 rounded-lg hover:bg-opacity-20 transition cursor-pointer">
+                            <div class="w-10 h-10 rounded bg-indigo-100 flex items-center justify-center text-indigo-600 mr-4">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">Graduation (Friends Forever)</h4>
+                                <p class="text-sm opacity-80">Vitamin C</p>
+                            </div>
+                            <div class="text-sm opacity-70">3:42</div>
+                        </div>
+                        
+                        <!-- Song 2 -->
+                        <div class="flex items-center p-3 bg-white bg-opacity-10 rounded-lg hover:bg-opacity-20 transition cursor-pointer">
+                            <div class="w-10 h-10 rounded bg-indigo-100 flex items-center justify-center text-indigo-600 mr-4">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">Good Riddance (Time of Your Life)</h4>
+                                <p class="text-sm opacity-80">Green Day</p>
+                            </div>
+                            <div class="text-sm opacity-70">2:35</div>
+                        </div>
+                        
+                        <!-- Song 3 -->
+                        <div class="flex items-center p-3 bg-white bg-opacity-10 rounded-lg hover:bg-opacity-20 transition cursor-pointer">
+                            <div class="w-10 h-10 rounded bg-indigo-100 flex items-center justify-center text-indigo-600 mr-4">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">I Will Remember You</h4>
+                                <p class="text-sm opacity-80">Sarah McLachlan</p>
+                            </div>
+                            <div class="text-sm opacity-70">4:01</div>
+                        </div>
+                        
+                        <!-- Song 4 -->
+                        <div class="flex items-center p-3 bg-white bg-opacity-10 rounded-lg hover:bg-opacity-20 transition cursor-pointer">
+                            <div class="w-10 h-10 rounded bg-indigo-100 flex items-center justify-center text-indigo-600 mr-4">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">Count on Me</h4>
+                                <p class="text-sm opacity-80">Bruno Mars</p>
+                            </div>
+                            <div class="text-sm opacity-70">3:18</div>
+                        </div>
+                        
+                        <!-- Song 5 -->
+                        <div class="flex items-center p-3 bg-white bg-opacity-10 rounded-lg hover:bg-opacity-20 transition cursor-pointer">
+                            <div class="w-10 h-10 rounded bg-indigo-100 flex items-center justify-center text-indigo-600 mr-4">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">See You Again</h4>
+                                <p class="text-sm opacity-80">Wiz Khalifa ft. Charlie Puth</p>
+                            </div>
+                            <div class="text-sm opacity-70">3:50</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button class="w-full bg-white hover:bg-gray-100 text-indigo-600 py-3 rounded-lg font-semibold transition">
+                            View Full Playlist
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section id="About"></section>
+    </section>
+    
+
+    <!-- Footer -->
+
+    <footer class="bg-gray-900 text-gray-400 py-12 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-book-open text-indigo-400 text-2xl"></i>
+                        <span class="text-xl font-bold text-white">Memories Forever</span>
+                    </div>
+                    <p class="mb-4">Celebrating the Class of 2024 and preserving precious memories from our school days.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition">Home</a></li>
+                        <li><a href="#messages" class="hover:text-white transition">Messages</a></li>
+                        <li><a href="#Profile" class="hover:text-white transition">Profil Kelas</a></li>
+                        <li><a href="#gallery" class="hover:text-white transition">gallery</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium text-lg mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition">Download Photos</a></li>
+                        <li><a href="#" class="hover:text-white transition">Graduation Info</a></li>
+                        <li><a href="#" class="hover:text-white transition">Alumni Network</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium text-lg mb-4">Stay Updated</h4>
+                    <p class="mb-4">Subscribe to get notified when new content is added to the yearbook.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-3 py-2 bg-gray-800 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full">
+                        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 rounded-r-lg">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-sm">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p>&copy; 2024 Memories Forever Yearbook. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                        <a href="#" class="hover:text-white transition">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-indigo-600 text-white rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Photo Modal -->
+    <div id="photoModal" class="modal fixed inset-0 w-full h-full flex items-center justify-center z-50 bg-black bg-opacity-75 opacity-0 invisible transition-opacity duration-300">
+        <div class="modal-content relative bg-white rounded-xl max-w-4xl w-full max-h-[90vh] transform scale-95 transition-transform duration-300">
+            <button id="closeModal" class="absolute -top-3 -right-3 bg-white rounded-full w-10 h-10 shadow-lg flex items-center justify-center z-10 hover:bg-gray-100 transition">
+                <i class="fas fa-times text-gray-700"></i>
+            </button>
+            <div class="p-4 h-full">
+                <div class="photo-frame w-full h-full max-h-[80vh] bg-gray-200 rounded-lg overflow-hidden relative">
+                    <img id="modalImage" src="" alt="" class="w-full h-full object-contain">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+  <script>
+      // Mobile menu toggle
+      document.getElementById('mobile-menu-button').addEventListener('click', function() {
+          const menu = document.getElementById('mobile-menu');
+          menu.classList.toggle('hidden');
+      });
+
+// Filter gallery items
+const filterButtons = document.querySelectorAll('.kelas-link');
+const photoCards = document.querySelectorAll('.photo-card');
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to clicked button
+        button.classList.add('active');
+        
+        const filterValue = button.getAttribute('data-filter');
+        
+        photoCards.forEach(card => {
+            if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+
+      // Countdown timer
+      function updateCountdown() {
+          const graduationDate = new Date('June 15, 2025 10:00:00').getTime();
+          const now = new Date().getTime();
+          const distance = graduationDate - now;
+          
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          
+          document.getElementById('days').textContent = days.toString().padStart(2, '0');
+          document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+          document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+          document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+          
+          if (distance < 0) {
+              clearInterval(countdownTimer);
+              document.getElementById('countdown').innerHTML = "<div class='text-xl font-bold'>We Graduated!</div>";
+          }
+      }
+      
+      updateCountdown();
+      const countdownTimer = setInterval(updateCountdown, 1000);
+
+      // Back to top button
+      window.addEventListener('scroll', function() {
+          const backToTopButton = document.getElementById('back-to-top');
+          if (window.pageYOffset > 300) {
+              backToTopButton.classList.remove('hidden');
+          } else {
+              backToTopButton.classList.add('hidden');
+          }
+      });
+
+      // Music toggle
+      const musicToggle = document.getElementById('music-toggle');
+      const musicIcon = document.getElementById('music-icon');
+      const bgMusic = document.getElementById('bg-music');
+      let isPlaying = false;
+      
+      musicToggle.addEventListener('click', function() {
+          if (isPlaying) {
+              bgMusic.pause();
+              musicIcon.classList.remove('fa-volume-up');
+              musicIcon.classList.add('fa-music');
+          } else {
+              bgMusic.play();
+              musicIcon.classList.remove('fa-music');
+              musicIcon.classList.add('fa-volume-up');
+          }
+          isPlaying = !isPlaying;
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+              e.preventDefault();
+              
+              const targetId = this.getAttribute('href');
+              if (targetId === '#') return;
+              
+              const targetElement = document.querySelector(targetId);
+              if (targetElement) {
+                  targetElement.scrollIntoView({
+                      behavior: 'smooth'
+                  });
+                  
+                  // Close mobile menu if open
+                  const mobileMenu = document.getElementById('mobile-menu');
+                  if (!mobileMenu.classList.contains('hidden')) {
+                      mobileMenu.classList.add('hidden');
+                  }
+              }
+          });
+      });
+
+      // Add fade-in animation when elements come into view
+      const fadeElements = document.querySelectorAll('.fade-in');
+      
+      const fadeInObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('animate-fadeIn');
+              }
+          });
+      }, { threshold: 0.1 });
+      
+      fadeElements.forEach(element => {
+          fadeInObserver.observe(element);
+      });
+  </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Mendapatkan semua link kelas
+      const kelasLinks = document.querySelectorAll(".kelas-link");
+  
+      // Menghapus kelas aktif dari semua link
+      function removeActiveClass() {
+        kelasLinks.forEach(link => link.classList.remove("active"));
+      }
+  
+      // Menambahkan event listener ke setiap link
+      kelasLinks.forEach(link => {
+        link.addEventListener("click", function (event) {
+          removeActiveClass();
+          this.classList.add("active");
+        });
+      });
+    });
+  </script>
+  
+
+</body>
+</html>
