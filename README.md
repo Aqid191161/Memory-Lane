@@ -64,7 +64,7 @@ Jika menemukan bug, silakan buka **Issue** baru di halaman repositori.
 
 ## 📜 Lisensi
 
-Proyek ini dilisensikan di bawah lisensi [MIT License](LICENSE). Anda bebas untuk menggunakan, mengubah, dan mendistribusikannya dengan tetap memberikan atribusi.
+Proyek ini dilisensikan di bawah lisensi [MIT License]().
 
 ## 🙌 Credits
 
@@ -77,9 +77,7 @@ Proyek ini dilisensikan di bawah lisensi [MIT License](LICENSE). Anda bebas untu
 ## 🐛 Bugs dan Issues
 
 Jika Anda menemukan bug, kesalahan tampilan, atau masalah kompatibilitas browser:
-- Buka tab [Issues](https://github.com/username/memory-lane-yearbook/issues)
+- Buka tab [Issues](https://github.com/Aqid191161/Memory-Lane/issues)
 - Jelaskan langkah-langkah untuk mereproduksi bug dan lampirkan tangkapan layar (jika memungkinkan).
 
----
 
-> 💡 *“Relive the memories, celebrate the journey, and cherish the moments that made us who we are.”*
