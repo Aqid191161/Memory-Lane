@@ -3,7 +3,7 @@
 **Memory Lane** adalah proyek *digital yearbook* interaktif dan modern yang dirancang untuk mengabadikan momen-momen spesial siswa kelas 2025. Website ini menyajikan galeri kenangan, profil siswa, pesan spesial, video, dan playlist kenangan, semuanya dalam tampilan yang menarik dan responsif.
 
 
-[![Lihat Demo](https://img.shields.io/badge/Demo-Live%20Preview-blue?style=for-the-badge)](https://your-live-demo-link.com)
+[![Lihat Demo](https://img.shields.io/badge/Demo-Live%20Preview-blue?style=for-the-badge)](https://aqid191161.github.io/Memory-Lane/)
 
 
 ## 📋 Deskripsi
